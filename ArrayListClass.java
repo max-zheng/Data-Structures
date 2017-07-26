@@ -148,19 +148,16 @@ public class ArrayListClass<T>{
                 break;
             }
         }
-        System.out.println(emptySpaceIndex);
         if(emptySpaceIndex == -1) return;
         size--;
         T[] newList = (T[])new Object[size];
         int oldListIndex = 0;
         for(int newListIndex = 0; newListIndex < newList.length; newListIndex++, oldListIndex++) {
             if(oldListIndex == emptySpaceIndex) oldListIndex++;
-            System.out.println("adding " + list[oldListIndex] + " at index: " + newListIndex);
             
             newList[newListIndex] = list[oldListIndex];
            
         }
-        System.out.println(Arrays.toString(newList));
         list = newList;
     }
 }

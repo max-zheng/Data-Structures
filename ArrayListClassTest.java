@@ -4,8 +4,6 @@ import org.junit.Test;
 
 public class ArrayListClassTest {
 
-    //removeall
-
     private ArrayListClass array;
     private String expectedResult;
 
@@ -271,7 +269,6 @@ public class ArrayListClassTest {
         expectedResult = "{b,c}";
 
         assertEquals("a", array.remove(0));
-        System.out.println(array);
         assertEquals(expectedResult, array.toString());
     }
     
@@ -281,7 +278,6 @@ public class ArrayListClassTest {
         expectedResult = "{a,c}";
 
         assertEquals("b", array.remove(1));
-        System.out.println(array);
         assertEquals(expectedResult, array.toString());
     }
     
@@ -294,7 +290,6 @@ public class ArrayListClassTest {
         assertEquals("c", array.remove(1));
         assertEquals("e", array.remove(2));
         assertEquals("a", array.remove(0));
-        System.out.println(array);
         assertEquals(expectedResult, array.toString());
     }
     
