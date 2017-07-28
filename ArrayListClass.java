@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Objects;
 
 // implementation of ArrayList
 
@@ -115,6 +116,11 @@ public class ArrayListClass<T>{
             }
         }
         return false;
+    }
+    
+    @Override
+    public int hashCode() {
+    	return Objects.hash(list, size);
     }
 
     @Override
