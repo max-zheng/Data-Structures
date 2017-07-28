@@ -31,10 +31,13 @@ public class LinkedListClass<T> {
 //		
 //	}
 	
-//	public void addFirst(T obj) {
-//		
-//	}
-//	
+	public void addFirst(T obj) {
+		LinkedListNode newFirst = new LinkedListNode(obj);
+		newFirst.setNext(this.first);
+		this.first = newFirst;
+		size++;
+	}
+	
 	public void addLast(T obj) {
 		add(obj);
 		size++;
@@ -91,11 +94,22 @@ public class LinkedListClass<T> {
 	public int size() {
 		return this.size;
 	}
-//	
-//	public Object[] toArray() {
-//		
-//	}
-//	
+	
+	public Object[] toArray() {
+		if(size == 0) {
+			return new Object[0];
+		}
+		Object[] array = new Object[size];
+		int index = 0;
+		array[index] = first.getData();
+		LinkedListNode next = first;
+		while(next.getNext() != null) {
+			next = next.getNext();
+			array[++index] = next.getData();
+		}
+		return array;
+	}
+	
 //	public boolean isEmpty() {
 //		
 //	}

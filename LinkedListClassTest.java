@@ -1,15 +1,16 @@
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
 //add index obj
-//addfirst
 //addlast same as add
 //contains
 //element
 //getlast
 //indexof
-//toarray
 //isempty
 //remove obj
 //remove index
@@ -194,6 +195,36 @@ public class LinkedListClassTest {
 		catch(IndexOutOfBoundsException e) {
 			assertEquals(expectedOutput, e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testAddFirstToEmptyList() {
+		list.addFirst(new Integer(5));
+		
+		assertEquals(5, list.get(0));
+		assertEquals(1, list.size());
+	}
+	
+	@Test
+	public void testAddFirstToNonemptyList() {
+		list = createLinkedList(5);
+		list.addFirst(new Integer(5));
+		
+		assertEquals(5, list.get(0));
+		assertEquals(6, list.size());
+	}
+	
+	@Test
+	public void testToArrayForNonemptyArray() {
+		list = createLinkedList(5);
+		Object[] array = new Object[] {0,1,2,3,4};
+		assertEquals(list.toArray(), array);
+	}
+	
+	@Test
+	public void testToArrayForEmptyArray() {
+		Object[] array = new Object[0];
+		assertEquals(list.toArray(), array);
 	}
 	
 	//creates a linkedlist with the number of nodes as the parameter specified and populates w/ an integer equal to the index
