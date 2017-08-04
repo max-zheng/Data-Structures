@@ -5,12 +5,6 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-//add index obj
-//addlast same as add
-//contains
-//element
-//getlast
-//indexof
 //remove obj
 //remove index
 //removeall
@@ -135,6 +129,136 @@ public class LinkedListClassTest {
 		
 		assertEquals(5, list.get(5));
 	}
+
+	@Test
+	public void testAddIndexToNonemptyList() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,4,5});
+		list.add(2,new Integer(3));
+		expectedOutput = "{1,2,3,4,5}";
+
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testAddIndexForInvalidIndex() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,4,5});
+
+		assertFalse(list.add(6,new Integer(3)));
+	}
+
+	@Test
+	public void testAddIndexToFirstIndex() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4});
+		list.add(0,new Integer(0));
+		expectedOutput = "{0,1,2,3,4}";
+
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemove() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,4,3,4,5});
+		expectedOutput = "{1,2,3,4,5}";
+
+		assertEquals(new Integer(4), list.remove(2));
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemoveInvalidIndex() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,4,3,4,5});
+
+		assertNull(list.remove(10));
+	}
+
+	@Test
+	public void testRemoveZeroIndex() {
+		list = new LinkedListClass<Object>(new Object[] {2,1,2,3,4,5});
+		expectedOutput = "{1,2,3,4,5}";
+
+		assertEquals(new Integer(2), list.remove(0));
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemoveLastIndex() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4,5,6});
+		expectedOutput = "{1,2,3,4,5}";
+
+		assertEquals(new Integer(6), list.remove(5));
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemoveObject() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,4,3,4,5});
+		expectedOutput = "{1,2,3,4,5}";
+
+		assertTrue(list.remove(new Integer(4)));
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemoveObjectNotContained() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,4,3,4,5});
+
+		assertFalse(list.remove(new Integer(6)));
+	}
+
+	@Test
+	public void testRemoveObjectFirstIndex() {
+		list = new LinkedListClass<Object>(new Object[] {4,1,2,3,4,5});
+		expectedOutput = "{1,2,3,4,5}";
+
+		assertTrue(list.remove(new Integer(4)));
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemoveObjectLastIndex() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4,10});
+		expectedOutput = "{1,2,3,4}";
+
+		assertTrue(list.remove(new Integer(10)));
+		assertEquals(expectedOutput, list.toString());
+	}
+
+	@Test
+	public void testRemoveAllObject() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4,10});
+		expectedOutput = "{1,2,3,4}";
+
+		assertTrue(list.removeAll(new Integer(10)));
+		assertEquals(expectedOutput, list.toString());
+		assertEquals(4, list.size());
+	}
+
+	@Test
+	public void testRemoveAllForMultipleObjects() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,10,3,4,10});
+		expectedOutput = "{1,2,3,4}";
+
+		assertTrue(list.removeAll(new Integer(10)));
+		assertEquals(expectedOutput, list.toString());
+		assertEquals(4, list.size());
+	}
+
+	@Test
+	public void testRemoveAllForObjectNotContained() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,10,3,4,10});
+
+		assertFalse(list.removeAll(new Integer(11)));
+	}
+
+	@Test
+	public void testRemoveAllForFirstIndex() {
+		list = new LinkedListClass<Object>(new Object[] {1,1,1,2,3,4});
+		expectedOutput = "{2,3,4}";
+
+		assertTrue(list.removeAll(new Integer(1)));
+		assertEquals(expectedOutput, list.toString());
+		assertEquals(3,list.size());
+	}
 	
 	@Test
 	public void testEqualsForTwoEqualLists() {
@@ -236,7 +360,106 @@ public class LinkedListClassTest {
 		list = createLinkedList(5);
 		assertFalse(list.isEmpty());
 	}
-	
+
+	@Test
+	public void testGetLastWithNonemptyArray() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4});
+		expectedOutput = "4";
+
+		assertEquals(expectedOutput, list.getLast().toString());
+	}
+
+	@Test
+	public void testGetLastWithEmptyArray() {
+		assertNull(list.getLast());
+	}
+
+	@Test
+	public void testElementWithNonemptyArray() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4});
+		expectedOutput = "1";
+
+		assertEquals(expectedOutput, list.element().toString());
+	}
+
+	@Test
+	public void testElementWithEmptyArray() {
+		assertNull(list.element());
+	}
+
+	@Test
+	public void testIndexOf() {
+		list = new LinkedListClass<Object>(new Object[] {"1","2","3","4"});
+
+		assertEquals(1, list.indexOf("2"));
+	}
+
+	@Test
+	public void testIndexOfOnFirstIndex() {
+		list = new LinkedListClass<Object>(new Object[] {"1","2","3","4"});
+
+		assertEquals(0, list.indexOf("1"));
+	}
+
+	@Test
+	public void testIndexOfOnNonexistentObject() {
+		list = new LinkedListClass<Object>(new Object[] {"1","2","3","4"});
+
+		assertEquals(-1, list.indexOf("6"));
+	}
+
+	@Test
+	public void testIndexOfOnEmptyArray() {
+		assertEquals(-1, list.indexOf("6"));
+	}
+
+	@Test
+	public void testIndexOfOnLastIndex() {
+		list = new LinkedListClass<Object>(new Object[] {"1","2","3","4"});
+
+		assertEquals(3, list.indexOf("4"));
+	}
+
+	@Test
+	public void testLastIndexOf() {
+		list = new LinkedListClass<Object>(new Object[] {"1","2","3","4"});
+
+		assertEquals(3, list.lastIndexOf("4"));
+	}
+
+	@Test
+	public void testLastIndexOfWithMultipleSameObject() {
+		list = new LinkedListClass<Object>(new Object[] {"4","4","4","4"});
+
+		assertEquals(3, list.lastIndexOf("4"));
+	}
+
+	@Test
+	public void testLastIndexOfWithObjectNotContained() {
+		list = new LinkedListClass<Object>(new Object[] {"1","1","1","1"});
+
+		assertEquals(-1, list.lastIndexOf("4"));
+	}
+
+	@Test
+	public void testContains() {
+		list = new LinkedListClass<Object>(new Object[] {"1","1","1","1"});
+
+		assertTrue(list.contains("1"));
+	}
+
+	@Test
+	public void testContainsForArrayNotContainingObject() {
+		list = new LinkedListClass<Object>(new Object[] {"1","1","1","1"});
+
+		assertFalse(list.contains("2"));
+	}
+
+	@Test
+	public void testContainsForEmptyArray() {
+		assertFalse(list.contains("1"));
+	}
+
 	//creates a linkedlist with the number of nodes as the parameter specified and populates w/ an integer equal to the index
 	private LinkedListClass<Object> createLinkedList(int numberOfNodes) {	
 		LinkedListNode[] nodeList = new LinkedListNode[numberOfNodes];

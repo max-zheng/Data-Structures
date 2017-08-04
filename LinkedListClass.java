@@ -32,19 +32,31 @@ public class LinkedListClass<T> {
 	
 	public boolean add(T obj) {
 		LinkedListNode last = getReferenceToLastNode();
-		if(last == null) {
-			first = new LinkedListNode(obj);
-		}
-		else {
-			last.setNext(new LinkedListNode(obj));
-		}
+		if(last == null) first = new LinkedListNode(obj);
+		else last.setNext(new LinkedListNode(obj));
 		size++;
 		return true;
 	}
-//	
-//	public boolean add(int index, T obj) {
-//		
-//	}
+
+	public boolean add(int index, T obj) {
+		if(index >= size) return false;
+		size++;
+		LinkedListNode newNode = new LinkedListNode(obj);
+		if(first == null) {
+			first = newNode;
+			return true;
+		}
+		if(index > 0) {
+			LinkedListNode previousNode = getReferenceToSpecificNode(index - 1);
+			newNode.setNext(previousNode.getNext());
+			previousNode.setNext(newNode);
+		}
+		else {
+			newNode.setNext(first);
+			first = newNode;
+		}
+		return true;
+	}
 	
 	public void addFirst(T obj) {
 		LinkedListNode newFirst = new LinkedListNode(obj);
@@ -62,16 +74,17 @@ public class LinkedListClass<T> {
 		this.first = null;
 		this.size = 0;
 	}
-//	
-//	public boolean contains(Object obj) {
-//		
-//	}
-//	
-//	//retrieves but does not remove head of list
-//	public T element() {
-//		
-//	}
-//	
+
+	public boolean contains(Object obj) {
+		return indexOf(obj) != -1;
+	}
+
+	//retrieves but does not remove head of list
+	@SuppressWarnings("unchecked")
+	public T element() {
+		return (T) first;
+	}
+
 	@SuppressWarnings("unchecked")
 	public T get(int index) {
 		if(index >= size) return null;
@@ -83,18 +96,31 @@ public class LinkedListClass<T> {
 		if(this.first == null) return null;
 		return (T) this.first.getData();
 	}
-//	
-//	public T getLast() {
-//		
-//	}
-//	
-//	public int indexOf(Object obj) {
-//		
-//	}
-//	
-//	public int lastIndexOf(Object obj) {
-//		
-//	}
+
+	@SuppressWarnings("unchecked")
+	public T getLast() {
+		LinkedListNode lastNode = getReferenceToLastNode();
+		return (lastNode != null) ? (T) lastNode.getData() : null;
+	}
+
+	public int indexOf(Object obj) {
+		LinkedListNode next = first;
+		for(int i = 0; i < size; i++) {
+			if(next.getData().equals(obj)) return i;
+			next = next.getNext();
+		}
+		return -1;
+ 	}
+
+	public int lastIndexOf(Object obj) {
+		int index = -1;
+		LinkedListNode next = first;
+		for(int i = 0; i < size; i++) {
+			if(next.getData().equals(obj)) index = i;
+			next = next.getNext();
+		}
+		return index;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public T set(int index, T obj) {
@@ -107,7 +133,7 @@ public class LinkedListClass<T> {
 	}
 	
 	public int size() {
-		return this.size;
+		return size;
 	}
 	
 	public Object[] toArray() {
@@ -124,22 +150,55 @@ public class LinkedListClass<T> {
 		}
 		return array;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public boolean isEmpty() {
 		return size == 0;
 	}
-//	
-//	public T remove(int index) {
-//		
-//	}
-//	
-//	public boolean remove(Object obj) {
-//		
-//	}
-//	
-//	public boolean removeAll(Object obj) {
-//		
-//	}
+
+	public T remove(int index) {
+		if(index >= size) return null;
+		size--;
+		if(index == 0) {
+			LinkedListNode firstNode = first;
+			first = firstNode.getNext();
+			return (T) firstNode.getData();
+		}
+		LinkedListNode previousNode = getReferenceToSpecificNode(index - 1);
+		LinkedListNode removedNode = previousNode.getNext();
+		previousNode.setNext(removedNode.getNext());
+		return (T) removedNode.getData();
+	}
+
+	public boolean remove(Object obj) {
+		LinkedListNode next = first;
+		if(next.getData().equals(obj)) {
+			first = next.getNext();
+			size--;
+			return true;
+		}
+		boolean found = false;
+		for(int i = 0; i < size; i++) {
+			if(next.getNext() != null && next.getNext().getData().equals(obj)) {
+				found = true;
+				break;
+			}
+			next = next.getNext();
+		}
+		if(found == false) return false;
+		next.setNext(next.getNext().getNext());
+		size--;
+		return true;
+	}
+
+	public boolean removeAll(Object obj) {
+		boolean removed = false;
+		while(remove(obj) == true) {
+			removed = true;
+			continue;
+		}
+		return removed;
+	}
 	
 	@Override
 	public String toString() {
