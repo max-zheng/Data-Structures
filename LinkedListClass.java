@@ -9,6 +9,21 @@ public class LinkedListClass<T> {
 		this.size = 0;
 		this.first = null;
 	}
+
+	public LinkedListClass(Object[] list) {
+		size = list.length;
+		if(size == 0) {
+			return;
+		}
+		first = new LinkedListNode();
+		LinkedListNode next = first;
+		for(int i = 0; i < list.length - 1; i++) {
+			next.setData(list[i]);
+			next.setNext(new LinkedListNode());
+			next = next.getNext();
+		}
+		next.setData(list[list.length - 1]);
+	}
 	
 	public LinkedListClass(LinkedListNode first) {
 		this.first = first;
@@ -110,9 +125,9 @@ public class LinkedListClass<T> {
 		return array;
 	}
 	
-//	public boolean isEmpty() {
-//		
-//	}
+	public boolean isEmpty() {
+		return size == 0;
+	}
 //	
 //	public T remove(int index) {
 //		

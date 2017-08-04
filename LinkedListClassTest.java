@@ -11,7 +11,6 @@ import org.junit.Test;
 //element
 //getlast
 //indexof
-//isempty
 //remove obj
 //remove index
 //removeall
@@ -90,19 +89,19 @@ public class LinkedListClassTest {
 	}
 	
 	@Test
-	public void testConstructorWithArgumentAndSize() {
-		list = createLinkedList(5);
-		
-		assertEquals(5, list.size());
-		
+	public void testNonDefaultConstructor() {
+		list = new LinkedListClass<Object>(new Object[] {1,2,3,4});
+		expectedOutput = "{1,2,3,4}";
+
+		assertEquals(expectedOutput, list.toString());
 	}
-	
+
 	@Test
-	public void testConstructorWithAnotherArgumentAndSize() {
-		list = createLinkedList(25);
-		
-		assertEquals(25, list.size());
-		
+	public void testNonDefaultConstructorWithEmptyArray() {
+		list = new LinkedListClass<Object>(new Object[0]);
+		expectedOutput = "{}";
+
+		assertEquals(expectedOutput, list.toString());
 	}
 
 	@Test
@@ -225,6 +224,17 @@ public class LinkedListClassTest {
 	public void testToArrayForEmptyArray() {
 		Object[] array = new Object[0];
 		assertEquals(list.toArray(), array);
+	}
+
+	@Test
+	public void testIsEmptyWithEmptyArray() {
+		assertTrue(list.isEmpty());
+	}
+
+	@Test
+	public void testIsEmptyWithNonemptyArray() {
+		list = createLinkedList(5);
+		assertFalse(list.isEmpty());
 	}
 	
 	//creates a linkedlist with the number of nodes as the parameter specified and populates w/ an integer equal to the index
